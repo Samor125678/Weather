@@ -6,6 +6,14 @@ window = Tk()
 window.title("Погода")
 window.geometry("810x400")
 
+conditions_label = Label(fg="#000000", bg="#ffffff", justify=LEFT)
+temp_label = Label(fg="#000000", bg="#ffffff", justify=LEFT)
+wind_label = Label(fg="#000000", bg="#ffffff", justify=LEFT)
+
+clothes_label_1 = Label( fg="#000000", bg="#ffffff", justify=LEFT)
+clothes_label_2 = Label( fg="#000000", bg="#ffffff", justify=LEFT)
+clothes_label_3 = Label( fg="#000000", bg="#ffffff", justify=LEFT)
+
 # чтобы поля не были пустыми и пользователь понял, что в них писать
 
 
@@ -58,17 +66,10 @@ def city_weather():
     city = city_name.get()
 
     conditions, temp, wind, temp_result= main.weather(city, country, state)
-    conditions_label = Label(text= "Условия:  " + str(conditions), fg="#000000", bg="#ffffff", justify=LEFT)
-    temp_label = Label(text= "Температура:  " + str(temp) + " С", fg="#000000", bg="#ffffff", justify=LEFT)
-    wind_label = Label(text= "Ветер:  " + str(wind) + " м/с", fg="#000000", bg="#ffffff", justify=LEFT)
 
     conditions_label.place(relx=.1, rely=.3)
     temp_label.place(relx=.1, rely=.4)
     wind_label.place(relx=.1, rely=.5)
-
-    clothes_label_1 = Label( fg="#000000", bg="#ffffff", justify=LEFT)
-    clothes_label_2 = Label( fg="#000000", bg="#ffffff", justify=LEFT)
-    clothes_label_3 = Label( fg="#000000", bg="#ffffff", justify=LEFT)
 
     clothes_label_1.place(relx=.1, rely=.6)
     clothes_label_2.place(relx=.1, rely=.7)
@@ -76,10 +77,19 @@ def city_weather():
 
     clothes_con, clothes_temp, clothes_wind = main.clothes(conditions, temp_result, wind)
 
-    clothes_label_1["text"] = clothes_con
-    clothes_label_2["text"] = clothes_temp
-    clothes_label_3["text"] = clothes_wind
+    change_text(clothes_con, clothes_temp, clothes_wind, conditions, temp, wind)
+    
 
+def change_text(clothes_con, clothes_temp, clothes_wind, conditions, temp, wind):
+
+    conditions_label.config(text= "Условия:  " + str(conditions))
+    temp_label.config(text="Температура:  " + str(temp) + " С")
+    wind_label.config(text="Ветер:  " + str(wind) + " м/с")
+
+    clothes_label_1.config(text = clothes_con)
+    clothes_label_2.config(text = clothes_temp)
+    clothes_label_3.config(text = clothes_wind)
+    
 
 button = Button(window, text="OK", command=city_weather)
 button.pack()
